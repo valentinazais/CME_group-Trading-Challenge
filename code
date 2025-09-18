@@ -1,0 +1,26 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from scipy import stats
+
+# Load the CSV file with ';' separator
+csv_path = "[path].csv"
+df = pd.read_csv(csv_path, sep=';')
+
+# Extract the 'Balance' column
+balances = df['Balance']
+
+# Input balance (change this to your desired value)
+input_balance = 29179.5  # Example value; replace with actual input
+
+# Calculate the percentile of the input balance
+percentile = stats.percentileofscore(balances, input_balance)
+
+# Plot the non-parametric distribution using KDE
+sns.kdeplot(balances, fill=True)
+plt.axvline(input_balance, color='red', linestyle='--', label=f'Input Balance: {input_balance}\nPercentile: {percentile:.2f}%')
+plt.title('Distribution of Balances')
+plt.xlabel('Balance')
+plt.ylabel('Density')
+plt.legend(loc='upper left')  # Changed this line
+plt.show()
